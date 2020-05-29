@@ -6,12 +6,12 @@ package render
 
 import (
 	"bytes"
+	"code.byted.org/gopkg/logs"
 	"fmt"
-	"html/template"
-	"net/http"
-
 	"github.com/gin-gonic/gin/internal/bytesconv"
 	"github.com/gin-gonic/gin/internal/json"
+	"html/template"
+	"net/http"
 )
 
 // JSON contains the given interface object.
@@ -56,6 +56,7 @@ var jsonAsciiContentType = []string{"application/json"}
 // Render (JSON) writes data with custom ContentType.
 func (r JSON) Render(w http.ResponseWriter) (err error) {
 	if err = WriteJSON(w, r.Data); err != nil {
+		logs.Error("json render err is %s", err.Error())
 		panic(err)
 	}
 	return
